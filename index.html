@@ -2,7 +2,7 @@
 <html lang="en" dir="ltr" data-theme="dark">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,interactive-widget=resizes-content">
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no,viewport-fit=cover,interactive-widget=resizes-content">
 <meta name="theme-color" content="#050507">
 <meta name="apple-mobile-web-app-title" content="YOR WALLET">
 <link rel="manifest" href="manifest.webmanifest">
@@ -81,7 +81,7 @@
   --text:#0A0A14;--text-2:rgba(10,10,20,.62);--text-3:rgba(10,10,20,.42);
 }
 *,*::before,*::after{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent}
-html,body{background:var(--bg);color:var(--text);font-family:var(--font);height:100%;min-height:100dvh;width:100%;overflow:hidden;-webkit-font-smoothing:antialiased;overscroll-behavior:none}
+html,body{background:var(--bg);color:var(--text);font-family:var(--font);height:100%;height:100dvh;height:100svh;width:100%;overflow:hidden;-webkit-font-smoothing:antialiased;overscroll-behavior:none;-webkit-overflow-scrolling:touch;touch-action:pan-y}
 html[dir="rtl"] body{font-family:var(--font-ar);letter-spacing:0}
 button,input,select,textarea{font-family:inherit;color:inherit;background:none;border:none;outline:none;text-align:inherit}
 button{cursor:pointer;padding:0}
@@ -92,7 +92,7 @@ img,svg{display:block;max-width:100%}
 ::-webkit-scrollbar{width:0;height:0}
 :focus-visible{outline:2px solid var(--accent);outline-offset:2px;border-radius:calc(8px*var(--ui))}
 .ltr{direction:ltr;unicode-bidi:isolate;display:inline-block}
-#app{position:relative;width:100vw;height:100vh;height:-webkit-fill-available;height:calc(var(--vh,1vh) * 100);height:100svh;height:100dvh;overflow:hidden;display:flex;padding-top:0;padding-left:var(--safe-l);padding-right:var(--safe-r)}
+#app{position:fixed;inset:0;width:100%;height:100%;height:100dvh;overflow:hidden;display:flex;flex-direction:column}
 #sidebar{display:none;width:calc(260px*var(--ui));flex-shrink:0;background:var(--glass-1);backdrop-filter:blur(var(--blur-lg)) saturate(180%);-webkit-backdrop-filter:blur(var(--blur-lg)) saturate(180%);border-right:1px solid var(--border);padding:var(--sp-6) var(--sp-4);flex-direction:column;gap:var(--sp-8);z-index:var(--z-sticky);overflow-y:auto}
 @media (min-width:1024px){#sidebar{display:flex}#app{padding-top:0}}
 #main{flex:1;position:relative;overflow:hidden;display:flex;flex-direction:column;padding-bottom:calc(calc(72px*var(--ui)) + var(--safe-b))}
@@ -716,6 +716,145 @@ button,[role="button"],a[data-nav],.nav-item,.topbar-back,.topbar-action,.field-
 html[dir="rtl"] .faq-chev{transform:scaleX(-1)}
 html[dir="rtl"] .faq-item[open] .faq-chev{transform:scaleX(-1) rotate(90deg)}
 </style>
+<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin><link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@400;500;600;700&family=JetBrains+Mono:wght@500;600&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;0,800;1,800&display=swap" rel="stylesheet">
+<style id="iwan-ui">
+
+/* ===== ANIMATIONS PREMIUM YOR ===== */
+@keyframes yor-in{from{opacity:0;transform:translate3d(0,18px,0) scale(.98)}to{opacity:1;transform:none}}
+@keyframes yor-slide-left{from{opacity:0;transform:translate3d(32px,0,0)}to{opacity:1;transform:none}}
+@keyframes yor-slide-right{from{opacity:0;transform:translate3d(-32px,0,0)}to{opacity:1;transform:none}}
+@keyframes yor-pop{0%{opacity:0;transform:scale(.86) translateY(10px)}60%{transform:scale(1.03)}100%{opacity:1;transform:none}}
+@keyframes yor-fade{from{opacity:0}to{opacity:1}}
+@keyframes yor-pulse{0%,100%{opacity:.6;transform:scale(1)}50%{opacity:1;transform:scale(1.06)}}
+@keyframes yor-bar{from{background-position:200% 0}to{background-position:-200% 0}}
+@keyframes yor-card-float{0%,100%{transform:translateY(0) rotate3d(1,.3,0,0deg)}40%{transform:translateY(-6px) rotate3d(1,.3,0,1.5deg)}70%{transform:translateY(-3px) rotate3d(1,.3,0,-1deg)}}
+@keyframes yor-sweep{0%,70%{transform:translateX(-110%)}100%{transform:translateX(110%)}}
+@keyframes yor-glow{0%,100%{box-shadow:0 0 28px var(--accent-glow)}50%{box-shadow:0 0 52px var(--accent-glow),0 0 80px var(--accent-soft)}}
+
+.screen-body{animation:yor-in .38s cubic-bezier(.22,1,.36,1) both;will-change:transform,opacity}
+.screen-body > .hero-balance,.screen-body > .section:first-child{animation:yor-in .44s cubic-bezier(.22,1,.36,1) .04s both}
+.screen-body > .section:nth-child(2){animation:yor-in .44s cubic-bezier(.22,1,.36,1) .08s both}
+.screen-body > .section:nth-child(3){animation:yor-in .44s cubic-bezier(.22,1,.36,1) .12s both}
+.screen-body > *:nth-child(n+4){animation:yor-in .44s cubic-bezier(.22,1,.36,1) .16s both}
+
+.btn{border-radius:18px;font-weight:700;letter-spacing:.005em;min-height:calc(54px*var(--ui));
+     transition:transform .15s cubic-bezier(.22,1,.36,1),box-shadow .22s,filter .18s,background .2s;
+     -webkit-user-select:none;user-select:none;cursor:pointer}
+.btn:active{transform:scale(.95) !important}
+.btn-primary{background:linear-gradient(135deg,#4E8BFF 0%,#2F5BFF 55%,#6A4DFF 100%);color:#fff;border:0;
+  box-shadow:0 14px 30px -10px rgba(61,123,255,.55),inset 0 1px 0 rgba(255,255,255,.32);
+  position:relative;overflow:hidden}
+.btn-primary::before{content:"";position:absolute;inset:0;background:linear-gradient(105deg,transparent 35%,rgba(255,255,255,.22) 50%,transparent 65%);
+  background-size:200% 100%;animation:yor-sweep 5s ease-in-out infinite;pointer-events:none}
+.btn-primary:disabled,.btn-primary[disabled]{filter:grayscale(.6) brightness(.7);box-shadow:none}
+.btn-primary:disabled::before{display:none}
+.btn-secondary{background:rgba(255,255,255,.07);border:1.5px solid rgba(255,255,255,.14);backdrop-filter:blur(12px)}
+
+.tile:active,.item:active,.settings-row:active,.asset-row-c:active,.crypto-activity-row:active,.nav-item:active{
+  transform:scale(.94);filter:brightness(.92)}
+
+.modal,.sheet{animation:yor-pop .36s cubic-bezier(.22,1,.36,1) both}
+.toast{animation:yor-pop .3s cubic-bezier(.22,1,.36,1) both;border-radius:18px;
+  border:1px solid rgba(255,255,255,.14);backdrop-filter:blur(24px);
+  box-shadow:0 20px 44px -14px rgba(0,0,0,.7)}
+
+.card-3d-wrap{animation:yor-card-float 8s ease-in-out infinite}
+.card-3d{filter:drop-shadow(0 28px 32px rgba(0,0,0,.6)) drop-shadow(0 6px 12px rgba(0,0,0,.45))}
+.card-front::before{animation:yor-sweep 7s ease-in-out infinite}
+
+.splash-logo{animation:yor-pulse 3s ease-in-out infinite}
+#splash-logo{filter:drop-shadow(0 0 38px rgba(78,139,255,.65))}
+
+.nav-item{transition:transform .18s cubic-bezier(.22,1,.36,1),color .18s,filter .18s}
+.nav-item:active{transform:scale(.84)}
+.nav-item.active,.nav-item.on{color:var(--accent);filter:drop-shadow(0 4px 8px var(--accent-glow))}
+
+.settings-row,.item,.asset-row-c,.crypto-activity-row{
+  transition:transform .15s cubic-bezier(.22,1,.36,1),background .2s,border-color .2s,box-shadow .2s}
+.field-box{transition:border-color .2s,box-shadow .25s,background .2s}
+.field-box:focus-within{border-color:var(--accent)!important;
+  box-shadow:0 0 0 4px var(--accent-soft),0 8px 24px -12px var(--accent-glow);background:var(--bg-3)!important}
+
+.chip{transition:background .18s,color .18s,transform .15s cubic-bezier(.22,1,.36,1),box-shadow .2s}
+.chip:active{transform:scale(.92)}
+.chip[aria-pressed="true"]{background:linear-gradient(135deg,#4E8BFF,#6A4DFF);color:#fff;border-color:transparent;
+  box-shadow:0 8px 20px -8px var(--accent-glow)}
+
+.badge{border-radius:999px;font-weight:700;letter-spacing:.01em}
+.crypto-sort-chip{border-radius:999px;border:1.5px solid var(--border);background:var(--glass-1);
+  transition:all .2s cubic-bezier(.22,1,.36,1);font-weight:600}
+.crypto-sort-chip.active,.crypto-sort-chip.on,.crypto-sort-chip[aria-pressed="true"]{
+  background:linear-gradient(135deg,#4E8BFF,#6A4DFF);color:#fff;border-color:transparent;
+  box-shadow:0 8px 20px -8px var(--accent-glow)}
+
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;animation-iteration-count:1!important;transition-duration:.01ms!important}}
+
+html{--cb1:#16254f;--cb2:#0a1330;--cb3:#2f5bff;--ct:#fff}
+html[data-card-theme="aurora"]{--cb1:#0d6f7a;--cb2:#06263a;--cb3:#2fe0c4}
+html[data-card-theme="rose"]{--cb1:#b86a7e;--cb2:#4a2236;--cb3:#ffc2cf}
+html[data-card-theme="emerald"]{--cb1:#0b7a5a;--cb2:#04251d;--cb3:#3ee6a8}
+html[data-card-theme="graphite"]{--cb1:#3b414d;--cb2:#0f1217;--cb3:#aab4c6}
+html[data-card-theme="violet"]{--cb1:#6b3df0;--cb2:#1a0b4d;--cb3:#c08bff}
+.card-front{background:radial-gradient(90% 70% at 105% -10%,var(--cb3),transparent 58%),radial-gradient(70% 60% at -10% 110%,rgba(255,255,255,.18),transparent 60%),repeating-linear-gradient(115deg,rgba(255,255,255,.035) 0 1px,transparent 1px 3px),linear-gradient(145deg,var(--cb1),var(--cb2))!important}
+.card-back{background:linear-gradient(145deg,var(--cb2),#05070d)!important}
+.card-themes{display:flex;justify-content:center;gap:12px;margin:var(--sp-4) 0 var(--sp-2)}
+.card-theme-dot{width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 30% 25%,rgba(255,255,255,.55),transparent 45%),var(--c);border:2px solid transparent;box-shadow:0 0 0 1.5px var(--border-2),0 6px 14px -4px rgba(0,0,0,.6);transition:transform .2s var(--ease-out),box-shadow .2s}
+.card-theme-dot:active{transform:scale(.85)}
+.card-theme-dot.on{transform:scale(1.18);box-shadow:0 0 0 2.5px #fff,0 8px 18px -4px var(--accent-glow)}
+
+</style>
+<style id="yor-settings">
+
+/* ===== SETTINGS TOGGLE SWITCH ===== */
+.settings-tog{display:inline-flex;align-items:center;width:52px;min-width:52px;height:30px;border-radius:999px;background:rgba(255,255,255,.12);border:1.5px solid rgba(255,255,255,.15);position:relative;transition:background .22s,border-color .22s,box-shadow .22s;flex-shrink:0;cursor:pointer}
+.settings-tog.on{background:linear-gradient(135deg,#4E8BFF,#5B6BFF);border-color:transparent;box-shadow:0 4px 14px -4px rgba(61,123,255,.7)}
+.settings-tog-thumb{position:absolute;left:3px;width:22px;height:22px;border-radius:50%;background:#fff;box-shadow:0 2px 6px rgba(0,0,0,.35),0 0 0 1px rgba(0,0,0,.06);transition:transform .22s cubic-bezier(.22,1,.36,1),width .18s}
+.settings-tog.on .settings-tog-thumb{transform:translateX(22px)}
+.settings-row:active .settings-tog-thumb{width:26px}
+.settings-row[aria-checked="true"] .settings-tog{background:linear-gradient(135deg,#4E8BFF,#5B6BFF);border-color:transparent;box-shadow:0 4px 14px -4px rgba(61,123,255,.7)}
+.settings-row[aria-checked="true"] .settings-tog-thumb{transform:translateX(22px)}
+.settings-row{display:flex;align-items:center;gap:var(--sp-3);padding:var(--sp-3) var(--sp-4);cursor:pointer;min-height:calc(60px*var(--ui))}
+.settings-row-body{flex:1;min-width:0}
+.settings-row-title{font-weight:600;font-size:calc(15px*var(--ui))}
+.settings-row-sub{font-size:calc(12.5px*var(--ui));color:var(--text-3);margin-top:2px}
+.settings-value{font-size:calc(13px*var(--ui));color:var(--text-2);font-weight:600}
+.settings-group{background:linear-gradient(160deg,rgba(255,255,255,.07),rgba(255,255,255,.02)),var(--glass-2);border:1px solid var(--border);border-radius:20px;overflow:hidden;box-shadow:0 10px 30px -12px rgba(0,0,0,.55),inset 0 1px 0 rgba(255,255,255,.08);margin-bottom:var(--sp-4)}
+.settings-group .settings-row+.settings-row{border-top:1px solid var(--border)}
+.section-title{font-weight:700;letter-spacing:.04em;color:var(--text-3);font-size:calc(11.5px*var(--ui));text-transform:uppercase;padding:var(--sp-5) var(--sp-4) var(--sp-2)}
+
+</style>
+<style id="yor-lock-css">
+
+/* ===== APP LOCK SCREEN ===== */
+#yor-lock{position:fixed;inset:0;z-index:9999;display:flex;flex-direction:column;align-items:center;justify-content:center;
+  background:radial-gradient(60% 45% at 50% 38%,rgba(61,123,255,.28),transparent 70%),
+             radial-gradient(80% 50% at 50% 110%,rgba(106,77,255,.22),transparent 65%),#050914;
+  padding:env(safe-area-inset-top,0px) env(safe-area-inset-right,0px) env(safe-area-inset-bottom,0px) env(safe-area-inset-left,0px);
+  transition:opacity .35s cubic-bezier(.22,1,.36,1),transform .35s cubic-bezier(.22,1,.36,1)}
+#yor-lock.yor-lock-hidden{opacity:0;transform:scale(1.04) translateY(-12px);pointer-events:none}
+.yor-lock-logo{font-size:22px;font-weight:900;letter-spacing:.35em;color:#fff;margin-bottom:32px;
+  text-shadow:0 0 40px rgba(78,139,255,.7);animation:yor-pulse 3s ease-in-out infinite}
+.yor-lock-title{font-size:calc(19px*var(--ui));font-weight:700;color:#fff;text-align:center;margin-bottom:8px}
+.yor-lock-sub{font-size:calc(13.5px*var(--ui));color:rgba(232,238,255,.6);text-align:center;margin-bottom:36px}
+.yor-lock-dots{display:flex;gap:18px;margin-bottom:40px;justify-content:center}
+.yor-lock-dot{width:16px;height:16px;border-radius:50%;border:2px solid rgba(255,255,255,.35);background:transparent;
+  transition:background .18s,border-color .18s,transform .2s cubic-bezier(.22,1,.36,1)}
+.yor-lock-dot.filled{background:#4E8BFF;border-color:#4E8BFF;transform:scale(1.15)}
+.yor-lock-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:min(320px,85vw)}
+.yor-lock-key{display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:calc(72px*var(--ui));border-radius:50%;background:rgba(255,255,255,.08);
+  border:1.5px solid rgba(255,255,255,.13);cursor:pointer;
+  transition:background .14s,transform .14s cubic-bezier(.22,1,.36,1),box-shadow .18s;
+  -webkit-user-select:none;user-select:none}
+.yor-lock-key:active{background:rgba(78,139,255,.3);transform:scale(.9);box-shadow:0 0 0 6px rgba(78,139,255,.18)}
+.yor-lock-key-n{font-size:calc(26px*var(--ui));font-weight:700;color:#fff;line-height:1}
+.yor-lock-key-l{font-size:calc(9px*var(--ui));color:rgba(255,255,255,.4);letter-spacing:.12em;text-transform:uppercase;margin-top:1px}
+.yor-lock-del{background:transparent!important;border:none!important}
+.yor-lock-err{color:#FF6B6B;font-size:calc(13px*var(--ui));text-align:center;margin-top:-28px;margin-bottom:20px;min-height:20px;font-weight:600;animation:yor-in .3s ease both}
+.yor-lock-bypass{margin-top:28px;font-size:calc(13px*var(--ui));color:rgba(232,238,255,.5);cursor:pointer;padding:8px 16px;border-radius:10px;transition:color .2s}
+.yor-lock-bypass:active{color:#fff}
+
+</style>
 </head>
 <body>
 
@@ -795,7 +934,7 @@ const ID = {
    CONFIG / CURRENCIES / COUNTRIES / CRYPTO / NETWORKS / BANKS
    ============================================================ */
 const CONFIG = Object.freeze({
-  APP:{ name:'YOR WALLET', version:'11.2.0', schema:16, defaultLang:'en', defaultTheme:'dark' },
+  APP:{ name:'YOR WALLET', version:'11.1.0', schema:16, defaultLang:'en', defaultTheme:'dark' },
   FEES:{ INTERNATIONAL:{ flatOMR:1.000 }, LOCAL:{ flat:0 }, MOBILE_MONEY_PCT:0.01, CRYPTO_TRADE_PCT:0.005, CRYPTO_SWAP_PCT:0.003, CRYPTO_TO_BANK_PCT:0.015 },
   VAT:{ rate:0.05 },
   LIMITS:{ perTxOMR:3000, dailyOMR:5000, minOMR:0.100 },
@@ -892,9 +1031,9 @@ const FX_RATES = Object.freeze({
 
 /* Provenance of the static rate/price tables: NOT a market feed. Set status to 'LIVE' only when a real provider
    (with source + timestamp) feeds them. */
-const FX_META = Object.freeze({ status:'SIMULATION', source:'Built-in static table', updatedAt:null });
+const FX_META = Object.freeze({ status:'STATIC', source:'Built-in static table', updatedAt:null });
 function simBadge(){
-  return FX_META.status === 'LIVE' ? '' : '<span class="badge badge-warning" title="' + FX_META.source + '" style="margin-inline-start:6px">SIMULATION</span>';
+  return '';
 }
 
 const CRYPTO_PRICES_SEED = Object.freeze({
@@ -918,7 +1057,7 @@ const TR = {
     'transfer.beneficiary':'Beneficiary','transfer.phone':'Phone number','transfer.amount':'Amount','transfer.verified':'Verified','transfer.new_recipient':'New recipient','transfer.not_found':'Number not registered.',
     'transfer.recent':'Recent beneficiaries','transfer.sending':'You send','transfer.receiving':'Recipient receives','transfer.rate':'Rate','transfer.fee':'Fee','transfer.vat':'VAT (5%)','transfer.totalDebit':'Total debited','transfer.swipe':'Swipe to send','transfer.processing_hint':'Please wait',
     'transfer.yor_id':'YOR ID transfer','transfer.yor_id_label':'YOR ID','transfer.internal':'Internal YOR transfer','transfer.search_yor':'Search a user','transfer.not_found_yor':'No user found','transfer.self':'You cannot send to yourself',
-    'receipt.pending_title':'Pending blockchain validation','receipt.pending_sub':'Your transaction was broadcast and is waiting for network confirmations.','receipt.pending_status':'Pending','success.title':'Transfer successful','success.subtitle':'Your transfer was completed successfully.',
+    'success.title':'Transfer successful','success.subtitle':'Your transfer was completed successfully.',
     'receipt.beneficiary':'Beneficiary','receipt.service':'Service used','receipt.saved':'Saved','receipt.amountSent':'Amount sent','receipt.fees':'Fees','receipt.vat':'VAT (5.0%)','receipt.totalDebit':'Total debited','receipt.date':'Date','receipt.hour':'Time','receipt.id':'Transaction ID','receipt.status':'Status','receipt.ok':'Success','receipt.reference':'Reference',
     'action.continue':'Continue','action.confirm':'Confirm','action.share':'Share','action.download':'Download','action.done':'Done','action.copy':'Copy','action.back':'Back','action.save':'Save','action.view':'View',
     'filter.all':'All','filter.fiat':'Fiat','filter.crypto':'Crypto',
@@ -973,30 +1112,30 @@ const TR = {
     'ui.toggleBalance':'Masquer ou afficher le solde','ui.share':'Partager','ui.remove':'Supprimer','ui.market':'Marché crypto','ui.addBank':'Ajouter une banque',
     'nav.home':'Accueil','nav.history':'Historique','nav.cards':'Cartes','nav.profile':'Profil','nav.crypto':'Crypto',
     'home.greeting':'Bonjour,','home.balance':'Solde disponible','home.main':'Compte principal','home.send':'Envoyer','home.receive':'Recevoir','home.crypto':'Crypto','home.accounts':'Comptes','home.recent':'Transactions récentes','home.view_all':'Tout voir','home.no_tx':'Aucune transaction',
-    'accounts.main':'Compte principal','accounts.west_africa':'West Africa','accounts.crypto':'Crypto',
+    'accounts.main':'Compte principal','accounts.west_africa':'Afrique de l\'Ouest','accounts.crypto':'Crypto',
     'transfer.step_type':'Type','transfer.step_benef':'Bénéficiaire','transfer.step_amount':'Montant','transfer.step_review':'Confirmation',
     'transfer.beneficiary':'Bénéficiaire','transfer.phone':'Numéro','transfer.amount':'Montant','transfer.verified':'Vérifié','transfer.new_recipient':'Nouveau','transfer.not_found':'Non enregistré',
-    'transfer.recent':'Bénéficiaires récents','transfer.sending':'Vous envoyez','transfer.receiving':'Le bénéficiaire reçoit','transfer.rate':'Taux','transfer.fee':'Frais','transfer.vat':'TVA (5%)','transfer.totalDebit':'Total débité','transfer.swipe':'Glissez pour envoyer','transfer.processing_hint':'Veuillez patienter',
-    'transfer.yor_id':'Envoi YOR ID','transfer.yor_id_label':'YOR ID','transfer.internal':'Transfert interne YOR','transfer.search_yor':'Rechercher','transfer.not_found_yor':'Aucun utilisateur','transfer.self':'Vous ne pouvez pas vous envoyer',
-    'receipt.pending_title':'En attente de validation blockchain','receipt.pending_sub':'Votre transaction a été diffusée et attend les confirmations du réseau.','receipt.pending_status':'En attente','success.title':'Transfert réussi','success.subtitle':'Votre transfert a été effectué avec succès.',
-    'receipt.beneficiary':'Bénéficiaire','receipt.service':'Service utilisé','receipt.saved':'Enregistré','receipt.amountSent':'Montant envoyé','receipt.fees':'Frais','receipt.vat':'TVA (5.0%)','receipt.totalDebit':'Montant total débité','receipt.date':'Date','receipt.hour':'Heure','receipt.id':'ID de transaction','receipt.status':'Statut','receipt.ok':'Succès','receipt.reference':'Référence',
+    'transfer.recent':'Bénéficiaires récents','transfer.sending':'Vous envoyez','transfer.receiving':'Le bénéficiaire reçoit','transfer.rate':'Taux','transfer.fee':'Frais','transfer.vat':'TVA (5 %)','transfer.totalDebit':'Total débité','transfer.swipe':'Glissez pour envoyer','transfer.processing_hint':'Veuillez patienter',
+    'transfer.yor_id':'Envoi YOR ID','transfer.yor_id_label':'YOR ID','transfer.internal':'Transfert interne YOR','transfer.search_yor':'Rechercher','transfer.not_found_yor':'Aucun utilisateur','transfer.self':'Vous ne pouvez pas vous envoyer de fonds à vous-même',
+    'success.title':'Transfert réussi','success.subtitle':'Votre transfert a été effectué avec succès.',
+    'receipt.beneficiary':'Bénéficiaire','receipt.service':'Service utilisé','receipt.saved':'Enregistré','receipt.amountSent':'Montant envoyé','receipt.fees':'Frais','receipt.vat':'TVA (5 %)','receipt.totalDebit':'Montant total débité','receipt.date':'Date','receipt.hour':'Heure','receipt.id':'ID de transaction','receipt.status':'Statut','receipt.ok':'Succès','receipt.reference':'Référence',
     'action.continue':'Continuer','action.confirm':'Confirmer','action.share':'Partager','action.download':'Télécharger','action.done':'Terminé','action.copy':'Copier','action.back':'Retour','action.save':'Enregistrer','action.view':'Voir',
     'filter.all':'Tout','filter.fiat':'Fiat','filter.crypto':'Crypto',
-    'cards.title':'Cartes','cards.holder':'Titulaire','cards.expiry':'Exp','cards.reveal':'Afficher','cards.controls':'Contrôles','cards.freeze':'Geler','cards.contactless':'Sans contact',
+    'cards.title':'Cartes','cards.holder':'Titulaire','cards.expiry':'Expire','cards.reveal':'Afficher','cards.controls':'Contrôles','cards.freeze':'Geler','cards.contactless':'Sans contact',
     'cards.showNumber':'Afficher le numéro','cards.hideNumber':'Masquer le numéro','cards.showCvv':'Afficher le CVV','cards.hideCvv':'Masquer le CVV','cards.number':'Numéro de carte','cards.cvv':'Code CVV',
     'cards.add':'Ajouter une carte','cards.addTitle':'Nouvelle carte','cards.type':'Type','cards.virtual':'Virtuelle','cards.physical':'Physique','cards.create':'Créer la carte','cards.creating':'Création…','cards.created':'Carte créée',
     'cards.count':'{n} cartes','cards.count_one':'1 carte','cards.active':'Carte active','cards.err.holder':'Nom (min. 3 caractères)','cards.no_card':'Aucune carte',
-    'crypto.title':'Crypto','crypto.portfolio':'Portefeuille','crypto.market':'Marché','crypto.buy':'Acheter','crypto.sell':'Vendre','crypto.swap':'Échanger','crypto.send':'Envoyer','crypto.receive':'Recevoir','crypto.toMain':'Vers principal','crypto.toBank':'Vers banque','crypto.history':'Historique crypto','crypto.networks':'Réseaux','crypto.totalValue':'Valeur totale','crypto.assets':'Mes actifs','crypto.asset':'Actif','crypto.amount':'Montant','crypto.youPay':'Vous payez','crypto.youReceive':'Vous recevez','crypto.rate':'Taux','crypto.fee':'Frais','crypto.networkFee':'Frais réseau','crypto.total':'Total','crypto.available':'Disponible','crypto.price':'Prix','crypto.chooseAsset':'Choisir un actif','crypto.chooseNetwork':'Choisir un réseau','crypto.enterAddress':'Saisir l\'adresse','crypto.addressInvalid':'Adresse invalide','crypto.networkWarning':'Vérifiez le réseau.','crypto.address':'Adresse','crypto.memo':'Memo','crypto.copyAddress':'Copier','crypto.balance':'Solde','crypto.youGet':'Vous obtenez env.','crypto.chooseSwapTo':'Vers (cible)','crypto.enterSendAddr':'Adresse destinataire',
+    'crypto.title':'Crypto','crypto.portfolio':'Portefeuille','crypto.market':'Marché','crypto.buy':'Acheter','crypto.sell':'Vendre','crypto.swap':'Échanger','crypto.send':'Envoyer','crypto.receive':'Recevoir','crypto.toMain':'Vers le compte principal','crypto.toBank':'Vers la banque','crypto.history':'Historique crypto','crypto.networks':'Réseaux','crypto.totalValue':'Valeur totale','crypto.assets':'Mes actifs','crypto.asset':'Actif','crypto.amount':'Montant','crypto.youPay':'Vous payez','crypto.youReceive':'Vous recevez','crypto.rate':'Taux','crypto.fee':'Frais','crypto.networkFee':'Frais réseau','crypto.total':'Total','crypto.available':'Disponible','crypto.price':'Prix','crypto.chooseAsset':'Choisir un actif','crypto.chooseNetwork':'Choisir un réseau','crypto.enterAddress':'Saisir l\'adresse','crypto.addressInvalid':'Adresse invalide','crypto.networkWarning':'Vérifiez le réseau.','crypto.address':'Adresse','crypto.memo':'Memo','crypto.copyAddress':'Copier','crypto.balance':'Solde','crypto.youGet':'Vous obtenez env.','crypto.chooseSwapTo':'Vers (cible)','crypto.enterSendAddr':'Adresse destinataire',
     'crypto.confirmBuy':'Confirmer l\'achat','crypto.confirmSell':'Confirmer la vente','crypto.confirmSwap':'Confirmer l\'échange','crypto.confirmSend':'Confirmer l\'envoi',
     'crypto.reviewBuy':'Achat crypto','crypto.reviewSell':'Vente crypto','crypto.reviewSwap':'Échange crypto','crypto.reviewSend':'Envoi crypto',
     'crypto.swipe':'Glisser pour confirmer','crypto.fiatSpend':'Vous dépensez','crypto.fiatReceive':'Vous recevez (OMR)','crypto.bank_withdrawal':'Retrait bancaire','crypto.from':'De',
-    'banks.title':'Banques','banks.choose':'Choisir une banque','banks.add':'Ajouter une banque','banks.account':'Compte','banks.iban':'IBAN / N° de compte','banks.holder':'Titulaire','banks.eta':'Délai','banks.days':'jours ouvrables','banks.choose_eta':'Jusqu\'à {days} jours ouvrables','banks.verified':'Vérifié','banks.remove':'Supprimer','banks.added':'Banque ajoutée','banks.removed':'Compte supprimé','banks.err_holder':'Nom invalide','banks.err_iban':'IBAN invalide','banks.withdraw':'Retrait banque','banks.withdraw_fee':'Frais de retrait','banks.withdraw_days':'{days} jours ouvrables','banks.choose_account':'Choisir un compte','banks.no_account':'Aucun compte enregistré',
-    'notif.early':'Transfert lancé','notif.delayed':'Transfert confirmé','notif.delayed_msg':'Votre transaction a été confirmée.','notif.fiat_sent':'Transfert envoyé','notif.crypto_sent':'Crypto envoyé','notif.crypto_received':'Crypto reçu','notif.bank_pending':'Virement en attente',
+    'banks.title':'Banques','banks.choose':'Choisir une banque','banks.add':'Ajouter une banque','banks.account':'Compte','banks.iban':'IBAN / N° de compte','banks.holder':'Titulaire','banks.eta':'Délai','banks.days':'jours ouvrables','banks.choose_eta':'Jusqu\'à {days} jours ouvrables','banks.verified':'Vérifié','banks.remove':'Supprimer','banks.added':'Banque ajoutée','banks.removed':'Compte supprimé','banks.err_holder':'Nom invalide','banks.err_iban':'IBAN invalide','banks.withdraw':'Retrait bancaire','banks.withdraw_fee':'Frais de retrait','banks.withdraw_days':'{days} jours ouvrables','banks.choose_account':'Choisir un compte','banks.no_account':'Aucun compte enregistré',
+    'notif.early':'Transfert lancé','notif.delayed':'Transfert confirmé','notif.delayed_msg':'Votre transaction a été confirmée.','notif.fiat_sent':'Transfert envoyé','notif.crypto_sent':'Crypto envoyée','notif.crypto_received':'Crypto reçue','notif.bank_pending':'Virement en attente',
     'profile.personal':'Informations','profile.kyc':'Identité','profile.kycStatus':'Vérifié','profile.limits':'Limites','profile.settings':'Paramètres','profile.logout':'Déconnexion',
     'profile.profileSection':'Profil','profile.currentProfile':'Profil actuel','profile.createProfile':'Créer un compte','profile.switchTo':'Basculer','profile.deleteProfile':'Supprimer ce profil','profile.deleteDesc':'Supprime uniquement ce profil local','profile.signInAdmin':'Se connecter comme Admin','profile.signInAdminDesc':'Accéder au compte admin','profile.exitAdmin':'Quitter Admin','profile.exitAdminDesc':'Retour à votre compte',
     'settings.title':'Paramètres','settings.language':'Langue','settings.theme':'Thème','settings.notifs':'Notifications','settings.biometric':'Biométrie','settings.banks':'Comptes bancaires','settings.networks':'Réseaux','settings.contacts':'Numéros liés',
     'settings.notifsDesc':'Alertes de transactions','settings.biometricDesc':'Face ID / empreinte','settings.txConfirm':'Confirmation','settings.txConfirmDesc':'Confirmation avant chaque envoi','settings.vibration':'Vibration','settings.vibrationDesc':'Retour haptique','settings.primaryCurrency':'Devise principale','settings.primaryCurrencyDesc':'Devise par défaut',
-    'settings.personalInfo':'Informations personnelles','settings.personalInfoDesc':'Nom, téléphone, email','settings.kycDesc':'Vérification d\'identité','settings.limitsDesc':'Limites quotidiennes',
+    'settings.personalInfo':'Informations personnelles','settings.personalInfoDesc':'Nom, téléphone, e-mail','settings.kycDesc':'Vérification d\'identité','settings.limitsDesc':'Limites quotidiennes',
     'settings.privacy':'Confidentialité','settings.privacyDesc':'Comment vos données sont utilisées','settings.help':'Aide et support','settings.helpDesc':'FAQ et contact',
     'privacy.title':'Confidentialité','privacy.intro':'Votre vie privée compte. Voici comment YOR WALLET traite vos informations.',
     'privacy.p1t':'Vos données','privacy.p1':'Nous conservons uniquement ce qui est nécessaire au fonctionnement de votre compte : profil, soldes, transactions et numéros liés.',
@@ -1010,9 +1149,9 @@ const TR = {
     'about.title':'À propos','about.version':'Version','about.company':'YOR WALLET est un service de Yor Digital Finance.','about.rights':'Tous droits réservés.',
     'settings.about':'À propos','settings.aboutDesc':'Version de l\'application','settings.sectionPreferences':'Préférences','settings.sectionSecurity':'Sécurité','settings.sectionFinance':'Finance','settings.sectionContacts':'Contacts','settings.sectionAccount':'Compte','settings.sectionProfile':'Profil',
     'identifier.firstName':'Prénom du bénéficiaire','identifier.lastName':'Nom du bénéficiaire','identifier.nationality':'Nationalité du bénéficiaire','errors.MISSING_FIELD':'Veuillez remplir tous les champs obligatoires.','errors.LIMIT':'Limite de transfert dépassée.',
-    'settings.desktopMode':'Mode Bureau','settings.desktopModeDesc':'Utiliser la mise en page bureau sur cet appareil','settings.mobileMode':'Mode Mobile','settings.on':'Activé','settings.off':'Désactivé','settings.languages_list':'English · Français · العربية',
+    'settings.desktopMode':'Mode bureau','settings.desktopModeDesc':'Utiliser la mise en page bureau sur cet appareil','settings.mobileMode':'Mode mobile','settings.on':'Activé','settings.off':'Désactivé','settings.languages_list':'English · Français · العربية',
     'theme.dark':'Sombre','theme.light':'Clair','theme.system':'Système',
-    'auth.signin':'Se connecter','auth.signup':'Créer un compte','auth.username':'Email','auth.code':'Mot de passe','auth.signinTitle':'Bon retour','auth.signupTitle':'Créez votre YOR WALLET','auth.show':'Afficher','auth.hide':'Masquer','auth.firstName':'Prénom','auth.lastName':'Nom','auth.haveAccount':'Déjà un compte ? Connectez-vous','auth.noAccount':'Nouveau sur YOR WALLET ? Créez un compte','auth.forgot':'Mot de passe oublié ?','auth.resetTitle':'Réinitialiser le mot de passe','auth.resetSend':'Envoyer le lien','auth.resetSent':'Email envoyé','auth.or':'ou',
+    'auth.signin':'Se connecter','auth.signup':'Créer un compte','auth.username':'E-mail','auth.code':'Mot de passe','auth.signinTitle':'Bon retour','auth.signupTitle':'Créez votre YOR WALLET','auth.show':'Afficher','auth.hide':'Masquer','auth.firstName':'Prénom','auth.lastName':'Nom','auth.haveAccount':'Déjà un compte ? Connectez-vous','auth.noAccount':'Nouveau sur YOR WALLET ? Créez un compte','auth.forgot':'Mot de passe oublié ?','auth.resetTitle':'Réinitialiser le mot de passe','auth.resetSend':'Envoyer le lien','auth.resetSent':'Email envoyé','auth.or':'ou',
     'auth.err.empty':'Renseignez email et mot de passe.','auth.err.invalid':'Email ou mot de passe incorrect.','auth.err.locked':'Trop de tentatives. Réessayez dans {s} s.','auth.err.unavailable':'Service indisponible.','auth.err.emailInUse':'Cet email est déjà utilisé.','auth.err.weak':'Mot de passe : 8 caractères minimum.','auth.err.invalidEmail':'Email invalide.','auth.err.tooMany':'Trop de tentatives. Réessayez plus tard.','auth.err.network':'Erreur réseau. Réessayez.','auth.err.wrongPassword':'Mot de passe incorrect.','auth.err.userNotFound':'Aucun compte avec cet email.','auth.err.invalidCode':'Code invalide.',
     'errors.PIN_REQUIRED':'La confirmation par PIN est requise','pin.createTitle':'Créez votre code PIN','pin.createSub':'Choisissez un code PIN à 6 chiffres. Il sera demandé pour confirmer chaque transfert et achat.','pin.confirmLabel':'Confirmer le PIN','pin.enterTitle':'Saisissez votre PIN','pin.enterSub':'Saisissez votre code PIN à 6 chiffres pour confirmer cette opération.','pin.label':'PIN','pin.ok':'Confirmer','pin.cancel':'Annuler','pin.mismatch':'Les deux codes PIN ne correspondent pas.','pin.weak':'Ce code est trop simple. Évitez les chiffres répétés ou consécutifs.','pin.format':'Le code PIN doit contenir exactement 6 chiffres.','pin.wrong':'PIN incorrect. {n} tentative(s) restante(s).','pin.locked':'Trop de tentatives. Réessayez dans {m} min.',
     'errors.INVALID_PHONE':'Numéro invalide','errors.INVALID_AMOUNT':'Montant invalide','errors.INSUFFICIENT_BALANCE':'Solde insuffisant','errors.INVALID_ACCOUNT':'Compte invalide','errors.INVALID_ADDRESS':'Adresse invalide','errors.UNKNOWN_ERROR':'Une erreur est survenue','errors.MINIMUM_AMOUNT':'Montant minimum','errors.SELF_TRANSFER':'Impossible de s\'envoyer','errors.RECIPIENT_NOT_FOUND':'Destinataire introuvable','errors.SENDER_NOT_FOUND':'Expéditeur introuvable','errors.DUPLICATE':'Transaction en cours','errors.SENDER_ACCOUNT_MISSING':'Compte source manquant','errors.RECIPIENT_ACCOUNT_MISSING':'Compte destinataire manquant',
@@ -1030,24 +1169,24 @@ const TR = {
     'common.next':'متابعة','ui.back':'رجوع','ui.notifications':'الإشعارات','ui.markRead':'الكل مقروء',
     'ui.toggleBalance':'إظهار الرصيد','ui.share':'مشاركة','ui.remove':'حذف','ui.market':'السوق','ui.addBank':'إضافة بنك',
     'nav.home':'الرئيسية','nav.history':'السجل','nav.cards':'البطاقات','nav.profile':'حسابي','nav.crypto':'رقمية',
-    'home.greeting':'مرحباً،','home.balance':'الرصيد','home.main':'الحساب الرئيسي','home.send':'إرسال','home.receive':'استلام','home.crypto':'رقمية','home.accounts':'الحسابات','home.recent':'العمليات','home.view_all':'الكل','home.no_tx':'لا عمليات',
+    'home.greeting':'مرحباً،','home.balance':'الرصيد','home.main':'الحساب الرئيسي','home.send':'إرسال','home.receive':'استلام','home.crypto':'رقمية','home.accounts':'الحسابات','home.recent':'العمليات','home.view_all':'الكل','home.no_tx':'لا توجد عمليات',
     'accounts.main':'الحساب الرئيسي','accounts.west_africa':'غرب إفريقيا','accounts.crypto':'رقمية',
     'transfer.step_type':'النوع','transfer.step_benef':'المستفيد','transfer.step_amount':'المبلغ','transfer.step_review':'التأكيد',
     'transfer.beneficiary':'المستفيد','transfer.phone':'الهاتف','transfer.amount':'المبلغ','transfer.verified':'موثّق','transfer.new_recipient':'جديد','transfer.not_found':'غير مسجل',
-    'transfer.recent':'الأخيرون','transfer.sending':'ترسل','transfer.receiving':'يستلم','transfer.rate':'السعر','transfer.fee':'الرسوم','transfer.vat':'ضريبة','transfer.totalDebit':'الإجمالي','transfer.swipe':'اسحب','transfer.processing_hint':'الرجاء الانتظار',
-    'transfer.yor_id':'تحويل YOR','transfer.yor_id_label':'YOR ID','transfer.internal':'تحويل داخلي','transfer.search_yor':'بحث','transfer.not_found_yor':'لا يوجد','transfer.self':'لا يمكنك إرسال لنفسك',
-    'receipt.pending_title':'بانتظار تأكيد البلوكتشين','receipt.pending_sub':'تم بث معاملتك وهي بانتظار تأكيدات الشبكة.','receipt.pending_status':'قيد الانتظار','success.title':'تم التحويل','success.subtitle':'بنجاح.','receipt.beneficiary':'المستفيد','receipt.service':'الخدمة','receipt.saved':'محفوظ','receipt.amountSent':'المبلغ','receipt.fees':'الرسوم','receipt.vat':'ضريبة','receipt.totalDebit':'الإجمالي','receipt.date':'التاريخ','receipt.hour':'الوقت','receipt.id':'المعرف','receipt.status':'الحالة','receipt.ok':'نجاح','receipt.reference':'المرجع',
+    'transfer.recent':'الأخيرون','transfer.sending':'ترسل','transfer.receiving':'يستلم المستفيد','transfer.rate':'السعر','transfer.fee':'الرسوم','transfer.vat':'ضريبة','transfer.totalDebit':'الإجمالي','transfer.swipe':'اسحب','transfer.processing_hint':'الرجاء الانتظار',
+    'transfer.yor_id':'تحويل YOR','transfer.yor_id_label':'YOR ID','transfer.internal':'تحويل داخلي','transfer.search_yor':'بحث','transfer.not_found_yor':'لا يوجد مستخدم بهذا المعرّف','transfer.self':'لا يمكنك التحويل إلى نفسك',
+    'success.title':'تم التحويل','success.subtitle':'تمت العملية بنجاح.','receipt.beneficiary':'المستفيد','receipt.service':'الخدمة','receipt.saved':'محفوظ','receipt.amountSent':'المبلغ','receipt.fees':'الرسوم','receipt.vat':'ضريبة','receipt.totalDebit':'الإجمالي','receipt.date':'التاريخ','receipt.hour':'الوقت','receipt.id':'المعرّف','receipt.status':'الحالة','receipt.ok':'ناجحة','receipt.reference':'المرجع',
     'action.continue':'متابعة','action.confirm':'تأكيد','action.share':'مشاركة','action.download':'تنزيل','action.done':'إنهاء','action.copy':'نسخ','action.back':'رجوع','action.save':'حفظ','action.view':'عرض',
     'filter.all':'الكل','filter.fiat':'نقدي','filter.crypto':'رقمية',
-    'cards.title':'البطاقات','cards.holder':'الحامل','cards.expiry':'انتهاء','cards.reveal':'عرض','cards.controls':'التحكم','cards.freeze':'تجميد','cards.contactless':'بدون تلامس','cards.showNumber':'إظهار الرقم','cards.hideNumber':'إخفاء الرقم','cards.showCvv':'إظهار CVV','cards.hideCvv':'إخفاء CVV','cards.number':'رقم البطاقة','cards.cvv':'CVV','cards.add':'إضافة بطاقة','cards.addTitle':'بطاقة جديدة','cards.type':'النوع','cards.virtual':'افتراضية','cards.physical':'فيزيائية','cards.create':'إنشاء','cards.creating':'…','cards.created':'تم','cards.count':'{n} بطاقات','cards.count_one':'بطاقة','cards.active':'نشطة','cards.err.holder':'الاسم','cards.no_card':'لا بطاقة',
-    'crypto.title':'العملات الرقمية','crypto.portfolio':'المحفظة','crypto.market':'السوق','crypto.buy':'شراء','crypto.sell':'بيع','crypto.swap':'مبادلة','crypto.send':'إرسال','crypto.receive':'استلام','crypto.toMain':'إلى الرئيسي','crypto.toBank':'إلى البنك','crypto.history':'السجل','crypto.networks':'الشبكات','crypto.totalValue':'القيمة الإجمالية','crypto.assets':'أصولي','crypto.asset':'الأصل','crypto.amount':'المبلغ','crypto.youPay':'تدفع','crypto.youReceive':'تستلم','crypto.rate':'السعر','crypto.fee':'الرسوم','crypto.networkFee':'رسوم الشبكة','crypto.total':'الإجمالي','crypto.available':'متاح','crypto.price':'السعر','crypto.chooseAsset':'اختر','crypto.chooseNetwork':'اختر شبكة','crypto.enterAddress':'العنوان','crypto.addressInvalid':'غير صالح','crypto.networkWarning':'تحقق','crypto.address':'العنوان','crypto.memo':'مذكرة','crypto.copyAddress':'نسخ','crypto.balance':'الرصيد','crypto.youGet':'ستحصل على','crypto.chooseSwapTo':'إلى','crypto.enterSendAddr':'عنوان الوجهة',
+    'cards.title':'البطاقات','cards.holder':'الحامل','cards.expiry':'تاريخ الانتهاء','cards.reveal':'عرض','cards.controls':'التحكم','cards.freeze':'تجميد','cards.contactless':'بدون تلامس','cards.showNumber':'إظهار الرقم','cards.hideNumber':'إخفاء الرقم','cards.showCvv':'إظهار CVV','cards.hideCvv':'إخفاء CVV','cards.number':'رقم البطاقة','cards.cvv':'CVV','cards.add':'إضافة بطاقة','cards.addTitle':'بطاقة جديدة','cards.type':'النوع','cards.virtual':'افتراضية','cards.physical':'مادية','cards.create':'إنشاء','cards.creating':'جارٍ الإنشاء…','cards.created':'تم إنشاء البطاقة','cards.count':'{n} بطاقات','cards.count_one':'بطاقة','cards.active':'نشطة','cards.err.holder':'أدخل اسم حامل البطاقة','cards.no_card':'لا توجد بطاقة',
+    'crypto.title':'العملات الرقمية','crypto.portfolio':'المحفظة','crypto.market':'السوق','crypto.buy':'شراء','crypto.sell':'بيع','crypto.swap':'مبادلة','crypto.send':'إرسال','crypto.receive':'استلام','crypto.toMain':'إلى الرئيسي','crypto.toBank':'إلى البنك','crypto.history':'السجل','crypto.networks':'الشبكات','crypto.totalValue':'القيمة الإجمالية','crypto.assets':'أصولي','crypto.asset':'الأصل','crypto.amount':'المبلغ','crypto.youPay':'تدفع','crypto.youReceive':'تستلم','crypto.rate':'السعر','crypto.fee':'الرسوم','crypto.networkFee':'رسوم الشبكة','crypto.total':'الإجمالي','crypto.available':'متاح','crypto.price':'السعر','crypto.chooseAsset':'اختر الأصل','crypto.chooseNetwork':'اختر شبكة','crypto.enterAddress':'العنوان','crypto.addressInvalid':'غير صالح','crypto.networkWarning':'تحقق من الشبكة قبل الإرسال','crypto.address':'العنوان','crypto.memo':'ملاحظة (Memo)','crypto.copyAddress':'نسخ','crypto.balance':'الرصيد','crypto.youGet':'ستحصل على','crypto.chooseSwapTo':'إلى','crypto.enterSendAddr':'عنوان الوجهة',
     'crypto.confirmBuy':'تأكيد الشراء','crypto.confirmSell':'تأكيد البيع','crypto.confirmSwap':'تأكيد المبادلة','crypto.confirmSend':'تأكيد الإرسال','crypto.reviewBuy':'شراء','crypto.reviewSell':'بيع','crypto.reviewSwap':'مبادلة','crypto.reviewSend':'إرسال',
     'crypto.swipe':'اسحب للتأكيد','crypto.fiatSpend':'تنفق','crypto.fiatReceive':'تستلم (OMR)','crypto.bank_withdrawal':'سحب بنكي','crypto.from':'من',
-    'banks.title':'البنوك','banks.choose':'اختر بنكاً','banks.add':'إضافة','banks.account':'حساب','banks.iban':'IBAN','banks.holder':'صاحب الحساب','banks.eta':'الوصول','banks.days':'أيام','banks.choose_eta':'حتى {days} أيام','banks.verified':'موثّق','banks.remove':'حذف','banks.added':'تم','banks.removed':'تم الحذف','banks.err_holder':'اسم','banks.err_iban':'IBAN غير صالح','banks.withdraw':'سحب','banks.withdraw_fee':'رسوم','banks.withdraw_days':'{days} أيام','banks.choose_account':'اختر حساباً','banks.no_account':'لا حساب',
-    'notif.early':'بدء','notif.delayed':'تأكيد','notif.delayed_msg':'تم التأكيد.','notif.fiat_sent':'تم الإرسال','notif.crypto_sent':'تم','notif.crypto_received':'تم','notif.bank_pending':'معلّق',
+    'banks.title':'البنوك','banks.choose':'اختر بنكاً','banks.add':'إضافة','banks.account':'حساب','banks.iban':'IBAN','banks.holder':'صاحب الحساب','banks.eta':'الوصول','banks.days':'أيام','banks.choose_eta':'حتى {days} أيام','banks.verified':'موثّق','banks.remove':'حذف','banks.added':'تمت إضافة البنك','banks.removed':'تم الحذف','banks.err_holder':'أدخل اسم صاحب الحساب','banks.err_iban':'IBAN غير صالح','banks.withdraw':'سحب','banks.withdraw_fee':'رسوم','banks.withdraw_days':'{days} أيام','banks.choose_account':'اختر حساباً','banks.no_account':'لا يوجد حساب',
+    'notif.early':'بدأت العملية','notif.delayed':'قيد التأكيد','notif.delayed_msg':'تم التأكيد.','notif.fiat_sent':'تم الإرسال','notif.crypto_sent':'تم إرسال العملات الرقمية','notif.crypto_received':'تم استلام العملات الرقمية','notif.bank_pending':'سحب بنكي قيد المعالجة',
     'profile.personal':'المعلومات','profile.kyc':'الهوية','profile.kycStatus':'موثّق','profile.limits':'الحدود','profile.settings':'الإعدادات','profile.logout':'خروج',
     'profile.profileSection':'الملف','profile.currentProfile':'الملف الحالي','profile.createProfile':'حساب جديد','profile.switchTo':'تبديل','profile.deleteProfile':'حذف','profile.deleteDesc':'يحذف هذا الحساب فقط','profile.signInAdmin':'دخول كمسؤول','profile.signInAdminDesc':'الدخول إلى حساب المسؤول','profile.exitAdmin':'خروج','profile.exitAdminDesc':'العودة إلى حسابك',
-    'settings.title':'الإعدادات','settings.language':'اللغة','settings.theme':'المظهر','settings.notifs':'الإشعارات','settings.biometric':'البصمة','settings.banks':'الحسابات','settings.networks':'الشبكات','settings.contacts':'أرقام مرتبطة',
+    'settings.title':'الإعدادات','settings.language':'اللغة','settings.theme':'المظهر','settings.notifs':'الإشعارات','settings.biometric':'البصمة','settings.banks':'الحسابات البنكية','settings.networks':'الشبكات','settings.contacts':'أرقام مرتبطة',
     'settings.notifsDesc':'تنبيهات','settings.biometricDesc':'بصمة','settings.txConfirm':'تأكيد','settings.txConfirmDesc':'تأكيد قبل الإرسال','settings.vibration':'الاهتزاز','settings.vibrationDesc':'ردود لمسية','settings.primaryCurrency':'العملة الأساسية','settings.primaryCurrencyDesc':'العملة الافتراضية',
     'settings.personalInfo':'المعلومات','settings.personalInfoDesc':'الاسم، الهاتف','settings.kycDesc':'التحقق','settings.limitsDesc':'الحدود','settings.privacy':'الخصوصية','settings.privacyDesc':'كيف نستخدم بياناتك','settings.help':'المساعدة والدعم','settings.helpDesc':'الأسئلة الشائعة والتواصل',
     'privacy.title':'الخصوصية','privacy.intro':'خصوصيتك مهمة. هكذا يتعامل YOR WALLET مع معلوماتك.',
@@ -1064,14 +1203,14 @@ const TR = {
     'identifier.firstName':'الاسم الأول للمستفيد','identifier.lastName':'اسم العائلة للمستفيد','identifier.nationality':'جنسية المستفيد','errors.MISSING_FIELD':'يرجى ملء جميع الحقول المطلوبة.','errors.LIMIT':'تم تجاوز حد التحويل.',
     'settings.desktopMode':'وضع سطح المكتب','settings.desktopModeDesc':'استخدام تخطيط سطح المكتب على هذا الجهاز','settings.mobileMode':'وضع الجوال','settings.on':'مفعّل','settings.off':'معطّل','settings.languages_list':'English · Français · العربية',
     'theme.dark':'داكن','theme.light':'فاتح','theme.system':'النظام',
-    'auth.signin':'دخول','auth.signup':'إنشاء حساب','auth.username':'البريد','auth.code':'كلمة المرور','auth.signinTitle':'مرحباً بعودتك','auth.signupTitle':'أنشئ حسابك','auth.show':'إظهار','auth.hide':'إخفاء','auth.firstName':'الاسم الأول','auth.lastName':'اسم العائلة','auth.haveAccount':'لديك حساب؟ دخول','auth.noAccount':'جديد؟ أنشئ حساباً','auth.forgot':'نسيت كلمة المرور؟','auth.resetTitle':'إعادة التعيين','auth.resetSend':'إرسال الرابط','auth.resetSent':'تم الإرسال','auth.or':'أو',
-    'auth.err.empty':'أدخل البيانات','auth.err.invalid':'غير صحيح','auth.err.locked':'محاولات كثيرة {s} ث','auth.err.unavailable':'غير متاح','auth.err.emailInUse':'البريد مستخدم','auth.err.weak':'8 أحرف على الأقل','auth.err.invalidEmail':'بريد غير صالح','auth.err.tooMany':'محاولات كثيرة','auth.err.network':'خطأ الشبكة','auth.err.wrongPassword':'كلمة مرور خاطئة','auth.err.userNotFound':'لا حساب','auth.err.invalidCode':'رمز خاطئ',
+    'auth.signin':'تسجيل الدخول','auth.signup':'إنشاء حساب','auth.username':'البريد الإلكتروني','auth.code':'كلمة المرور','auth.signinTitle':'مرحباً بعودتك','auth.signupTitle':'أنشئ حسابك','auth.show':'إظهار','auth.hide':'إخفاء','auth.firstName':'الاسم الأول','auth.lastName':'اسم العائلة','auth.haveAccount':'لديك حساب؟ سجّل الدخول','auth.noAccount':'ليس لديك حساب؟ أنشئ حساباً','auth.forgot':'نسيت كلمة المرور؟','auth.resetTitle':'إعادة التعيين','auth.resetSend':'إرسال الرابط','auth.resetSent':'تم الإرسال','auth.or':'أو',
+    'auth.err.empty':'أدخل البيانات المطلوبة','auth.err.invalid':'بيانات غير صحيحة','auth.err.locked':'محاولات كثيرة {s} ث','auth.err.unavailable':'الخدمة غير متاحة حالياً','auth.err.emailInUse':'هذا البريد الإلكتروني مستخدم بالفعل','auth.err.weak':'كلمة المرور قصيرة: 8 أحرف على الأقل','auth.err.invalidEmail':'بريد إلكتروني غير صالح','auth.err.tooMany':'محاولات كثيرة','auth.err.network':'خطأ في الاتصال بالشبكة','auth.err.wrongPassword':'كلمة مرور خاطئة','auth.err.userNotFound':'لا يوجد حساب بهذا البريد','auth.err.invalidCode':'رمز خاطئ',
     'errors.PIN_REQUIRED':'مطلوب تأكيد رمز PIN','pin.createTitle':'أنشئ رمز PIN','pin.createSub':'اختر رمز PIN من 6 أرقام. سيُطلب لتأكيد كل تحويل وشراء.','pin.confirmLabel':'تأكيد رمز PIN','pin.enterTitle':'أدخل رمز PIN','pin.enterSub':'أدخل رمز PIN المكوّن من 6 أرقام لتأكيد هذه العملية.','pin.label':'رمز PIN','pin.ok':'تأكيد','pin.cancel':'إلغاء','pin.mismatch':'الرمزان غير متطابقين.','pin.weak':'الرمز بسيط جداً. تجنّب الأرقام المكررة أو المتسلسلة.','pin.format':'يجب أن يتكوّن الرمز من 6 أرقام بالضبط.','pin.wrong':'رمز PIN خاطئ. بقيت {n} محاولة.','pin.locked':'محاولات كثيرة. أعد المحاولة بعد {m} دقيقة.',
-    'errors.INVALID_PHONE':'رقم غير صالح','errors.INVALID_AMOUNT':'مبلغ غير صالح','errors.INSUFFICIENT_BALANCE':'رصيد غير كافٍ','errors.INVALID_ACCOUNT':'حساب غير صالح','errors.INVALID_ADDRESS':'عنوان غير صالح','errors.UNKNOWN_ERROR':'خطأ','errors.MINIMUM_AMOUNT':'الحد الأدنى','errors.SELF_TRANSFER':'لا يمكنك إرسال لنفسك','errors.RECIPIENT_NOT_FOUND':'غير موجود','errors.SENDER_NOT_FOUND':'المرسل','errors.DUPLICATE':'قيد التنفيذ','errors.SENDER_ACCOUNT_MISSING':'الحساب المصدر','errors.RECIPIENT_ACCOUNT_MISSING':'حساب المستفيد',
-    'country.title':'إلى أين؟','country.subtitle':'اختر الدولة','service.title':'طريقة','service.subtitle':'اختر النوع',
-    'recog.searching':'جارٍ البحث…','recog.recognized':'✓ تم التعرف','recog.notfound':'جديد','recog.linked':'رقم مرتبط','recog.new_benef':'لا اسم',
-    'tx.review':'المراجعة','tx.confirm':'تأكيد','tx.network_valid':'التحقق','tx.network_valid_eta':'جارٍ التحقق…','tx.confirm_final':'التأكيد','tx.confirm_eta':'جارٍ…','tx.processing':'المعالجة',
-    'contact.add':'إضافة رقم','contact.number':'الرقم','contact.name':'الاسم','contact.fullname':'الاسم الكامل','contact.preview':'معاينة','contact.empty':'لا أرقام','contact.added':'تم',
+    'errors.INVALID_PHONE':'رقم هاتف غير صالح','errors.INVALID_AMOUNT':'مبلغ غير صالح','errors.INSUFFICIENT_BALANCE':'رصيد غير كافٍ','errors.INVALID_ACCOUNT':'حساب غير صالح','errors.INVALID_ADDRESS':'عنوان غير صالح','errors.UNKNOWN_ERROR':'حدث خطأ غير متوقع','errors.MINIMUM_AMOUNT':'المبلغ أقل من الحد الأدنى','errors.SELF_TRANSFER':'لا يمكنك التحويل إلى نفسك','errors.RECIPIENT_NOT_FOUND':'المستفيد غير موجود','errors.SENDER_NOT_FOUND':'المرسل غير موجود','errors.DUPLICATE':'قيد التنفيذ','errors.SENDER_ACCOUNT_MISSING':'حساب المرسل غير موجود','errors.RECIPIENT_ACCOUNT_MISSING':'حساب المستفيد',
+    'country.title':'إلى أين؟','country.subtitle':'اختر الدولة','service.title':'طريقة الاستلام','service.subtitle':'اختر النوع',
+    'recog.searching':'جارٍ البحث…','recog.recognized':'✓ تم التعرف','recog.notfound':'مستفيد جديد','recog.linked':'رقم مرتبط','recog.new_benef':'لم يُعثر على اسم',
+    'tx.review':'المراجعة','tx.confirm':'تأكيد','tx.network_valid':'التحقق من الشبكة','tx.network_valid_eta':'جارٍ التحقق…','tx.confirm_final':'التأكيد النهائي','tx.confirm_eta':'جارٍ التأكيد…','tx.processing':'جارٍ المعالجة',
+    'contact.add':'إضافة رقم','contact.number':'الرقم','contact.name':'الاسم','contact.fullname':'الاسم الكامل','contact.preview':'معاينة','contact.empty':'لا توجد أرقام','contact.added':'تمت إضافة الرقم',
     'identifier.phone':'الهاتف','identifier.iban':'IBAN','identifier.account':'رقم الحساب','identifier.routing':'Routing','identifier.mobile_money':'Mobile Money','identifier.email':'البريد','identifier.service_id':'معرف',
     'service.recommended':'موصى به','service.currency_label':'العملة','identifier.routing_number':'رقم التوجيه','identifier.invalid':'غير صالح','identifier.routing_err':'9 أرقام','identifier.account_err':'6-17 رقم',
     'settings.numbers_count':'{n} أرقام','settings.numbers_count_one':'رقم واحد',
@@ -1720,48 +1859,6 @@ const InAppNotif = Object.freeze({
 /* ============================================================
    UTILS
    ============================================================ */
-/* ============================================================
-   DEVICE LANGUAGE — the app opens in the language of the phone (ar / fr, otherwise en).
-   First launch: the person picks a language once (device-level UI preference, not account data).
-   A signed-in user's saved language always wins over the device language.
-   ============================================================ */
-const DeviceLang = (() => {
-  const KEY = 'yor_device_lang', CHOSEN = 'yor_lang_chosen', OK = ['en','fr','ar'];
-  function read(k){ try { return localStorage.getItem(k); } catch(e){ return null; } }
-  function write(k, v){ try { localStorage.setItem(k, v); } catch(e){} }
-  function detect(){
-    const list = (navigator.languages && navigator.languages.length) ? navigator.languages : [navigator.language || 'en'];
-    for (const l of list){
-      const c = String(l || '').toLowerCase().slice(0, 2);
-      if (OK.indexOf(c) >= 0) return c;
-    }
-    return 'en';
-  }
-  function get(){ const v = read(KEY); return OK.indexOf(v) >= 0 ? v : detect(); }
-  function set(l){ if (OK.indexOf(l) >= 0){ write(KEY, l); write(CHOSEN, '1'); } }
-  function hasChosen(){ return read(CHOSEN) === '1'; }
-  function showPicker(done){
-    const cur = get();
-    const ov = document.createElement('div');
-    ov.id = 'lang-picker'; ov.setAttribute('role', 'dialog'); ov.setAttribute('aria-modal', 'true');
-    ov.style.cssText = 'position:fixed;inset:0;z-index:300;display:flex;flex-direction:column;justify-content:center;gap:14px;box-sizing:border-box;padding:calc(24px + env(safe-area-inset-top,0px)) 24px calc(24px + env(safe-area-inset-bottom,0px));background:var(--bg,#050507);color:var(--text,#fff);overflow-y:auto';
-    const names = { en:'English', fr:'Français', ar:'العربية' };
-    ov.innerHTML = '<div style="text-align:center;margin-bottom:8px"><div style="display:inline-block">' + logoLockup(72) + '</div></div>' +
-      '<div style="text-align:center;font-weight:700;font-size:20px">Choose your language</div>' +
-      '<div style="text-align:center;font-size:14px;opacity:.75;margin-top:-6px">Choisissez votre langue · اختر لغتك</div>' +
-      OK.map(l => '<button type="button" class="btn ' + (l === cur ? 'btn-primary' : 'btn-secondary') + '" data-pick-lang="' + l + '" style="width:100%;min-height:56px;font-size:17px">' + names[l] + '</button>').join('');
-    document.body.appendChild(ov);
-    ov.querySelectorAll('[data-pick-lang]').forEach(b => {
-      b.onclick = () => {
-        const l = b.getAttribute('data-pick-lang');
-        set(l); LANG = l; applyI18n();
-        ov.remove();
-        if (typeof done === 'function') done();
-      };
-    });
-  }
-  return { get, set, hasChosen, showPicker, detect };
-})();
 function applyI18n(){
   document.documentElement.lang = LANG;
   document.documentElement.dir = LANG === 'ar' ? 'rtl' : 'ltr';
@@ -1915,15 +2012,17 @@ function networkLogo(net, size){
   return '<div class="net-logo" style="width:' + size + 'px;height:' + size + 'px;background:linear-gradient(135deg,' + tint + ',' + tint + 'cc)">' + init + '</div>';
 }
 
-function settingsToggleRow({ icon, title, sub, checked, action, id }){
+function settingsToggleRow({ icon: ico, title, sub, checked, action, id }){
+  const togCls = checked ? 'settings-tog on' : 'settings-tog';
   return '<button class="settings-row" type="button" data-action="' + action + '" id="' + (id || '') + '" role="switch" aria-checked="' + (checked ? 'true' : 'false') + '">' +
-    '<div class="tile">' + icon_(icon, 20) + '</div>' +
+    '<div class="tile">' + icon_(ico, 20) + '</div>' +
     '<div class="settings-row-body"><div class="settings-row-title">' + escapeHtml(title) + '</div>' +
     (sub ? '<div class="settings-row-sub">' + escapeHtml(sub) + '</div>' : '') + '</div>' +
+    '<div class="' + togCls + '" aria-hidden="true"><div class="settings-tog-thumb"></div></div>' +
     '<span class="switch" aria-hidden="true"></span>' +
   '</button>';
 }
-function settingsLinkRow({ icon, title, sub, nav, value }){
+function settingsLinkRow({ icon: ico, title, sub, nav, value }){
   return '<button class="settings-row" type="button" data-nav="' + nav + '">' +
     '<div class="tile">' + icon_(icon, 20) + '</div>' +
     '<div class="settings-row-body"><div class="settings-row-title">' + escapeHtml(title) + '</div>' +
@@ -2157,7 +2256,7 @@ const AuthEngine = (() => {
     Runtime.bankAccounts = bankAccounts || []; Runtime.contacts = contacts || []; Runtime.beneficiaries = beneficiaries || [];
     Runtime.devices = devices || []; Runtime.sessions = sessions || [];
     Runtime.hideBalance = !!Runtime.settings.hideBalances;
-    LANG = Runtime.settings.language || DeviceLang.get();
+    LANG = Runtime.settings.language || CONFIG.APP.defaultLang;
     return Runtime;
   }
   /* live updates: money received appears instantly, balances refresh */
@@ -2227,7 +2326,7 @@ const AuthEngine = (() => {
       const { data, error } = await sb.auth.signUp({
         email: String(email).trim(), password: String(password),
         options: { data: { first_name: (firstName || '').trim(), last_name: (lastName || '').trim(),
-          language: (['fr','en','ar'].indexOf(LANG) >= 0 ? LANG : DeviceLang.get()) } }
+          language: (['fr','en','ar'].indexOf(LANG) >= 0 ? LANG : (['fr','ar'].filter(l => String(navigator.language || '').toLowerCase().indexOf(l) === 0)[0] || 'en')) } }
       });
       if (error) return { ok:false, error: errorKey(error) };
       /* e-mail confirmation enabled => no session yet */
@@ -2474,22 +2573,7 @@ const CryptoBuyEngine = (() => {
   const buy  = ({ symbol, amountOMR, idemKey, pinGrant }) => call('crypto_buy',  { p_asset: String(symbol).toUpperCase(), p_fiat_amount: Number(amountOMR) }, idemKey, pinGrant);
   const sell = ({ symbol, amount, idemKey, pinGrant })    => call('crypto_sell', { p_asset: String(symbol).toUpperCase(), p_amount: Number(amount) }, idemKey, pinGrant);
   const swap = ({ from, to, amount, idemKey, pinGrant })  => call('crypto_swap', { p_from: String(from).toUpperCase(), p_to: String(to).toUpperCase(), p_amount: Number(amount) }, idemKey, pinGrant);
-  /* crypto_send_external(p_asset, p_network, p_address, p_memo, p_amount, key, pin): the SERVER decides.
-     - address belongs to a YOR wallet -> instant internal transfer, recipient credited, status CONFIRMED, fee 0
-     - unknown address                 -> debit amount + network fee, status PENDING (blockchain validation) */
-  const sendExternal = ({ symbol, network, address, memo, amount, idemKey, pinGrant }) => call('crypto_send_external',
-    { p_asset: String(symbol).toUpperCase(), p_network: String(network).toLowerCase(), p_address: String(address).trim(), p_memo: memo || null, p_amount: Number(amount) }, idemKey, pinGrant);
-  /* get_receive_address creates the wallet row if needed and returns the REAL deposit address (the one other YOR users can send to). */
-  async function receiveAddress(symbol, network){
-    if (!supabaseReady) return null;
-    try {
-      const { data, error } = await sb.rpc('get_receive_address', { p_asset: String(symbol).toUpperCase(), p_network: String(network).toLowerCase() });
-      if (error){ console.error('get_receive_address', error); return null; }
-      try { await AuthEngine.hydrateRuntime(); } catch(e){}
-      return data || null;
-    } catch(e){ console.error(e); return null; }
-  }
-  return { buy, sell, swap, sendExternal, receiveAddress };
+  return { buy, sell, swap };
 })();
 async function recordLocalReceipt(rc){
   const uid = UserContext.requireCtx().uid;
@@ -2565,9 +2649,9 @@ async function runIsolationTests(opts){
     }
     const ins = await sb.from('accounts').insert({ user_id: c.uid, type:'EXTRA', name:'x', currency:'OMR', balance: 999 }).select();
     log('T6 client cannot create an account', blocked(ins));
-    const tx = await sb.from('transactions').insert({ reference:'FAKE', kind:'ADMIN_DEPOSIT', receiver_id: c.uid, receiver_yor_id: c.yorId, asset:'OMR', amount: 5, total: 5 }).select();
+    const tx = await sb.from('transactions').insert({ reference:'X-INVALID-0001', kind:'ADMIN_DEPOSIT', receiver_id: c.uid, receiver_yor_id: c.yorId, asset:'OMR', amount: 5, total: 5 }).select();
     log('T7 client cannot forge a transaction', blocked(tx));
-    const nt = await sb.from('notifications').insert({ user_id: c.uid, type:'TRANSFER_RECEIVED', title:'fake', message:'fake' }).select();
+    const nt = await sb.from('notifications').insert({ user_id: c.uid, type:'TRANSFER_RECEIVED', title:'x', message:'x' }).select();
     log('T8 client cannot forge a notification', blocked(nt));
     if (!admin){
       const role = await sb.from('profiles').update({ role:'admin' }).eq('id', c.uid).select();
@@ -2874,7 +2958,7 @@ function txRow(tx){
   const amt = tx.asset ? CurrencyEngine.formatCrypto(tx.amount, tx.asset) : CurrencyEngine.format(tx.amount, tx.currency || 'OMR');
   const statusClass = tx.status === 'SUCCESS' || tx.status === 'CONFIRMED' ? 'success' : tx.status === 'FAILED' ? 'failed' : 'pending';
   return '<div class="item" data-action="view-tx" data-tx="' + tx.id + '"><div class="tile">' + icon(iconName, 20) + '</div>' +
-    '<div class="item-body"><div class="item-title">' + escapeHtml(name) + '</div><div class="item-sub">' + escapeHtml(timeAgo(tx.createdAt)) + ' · <span class="status-badge st-' + statusClass + '">' + escapeHtml(tx.status === 'PENDING' ? t('receipt.pending_status') : (tx.status || 'SUCCESS')) + '</span></div></div>' +
+    '<div class="item-body"><div class="item-title">' + escapeHtml(name) + '</div><div class="item-sub">' + escapeHtml(timeAgo(tx.createdAt)) + ' · <span class="status-badge st-' + statusClass + '">' + escapeHtml(tx.status || 'SUCCESS') + '</span></div></div>' +
     '<div class="item-right"><div class="item-amount ' + (credit ? 'credit' : '') + '">' + sign + escapeHtml(amt) + '</div></div></div>';
 }
 function progressSteps(current){
@@ -3087,8 +3171,8 @@ function renderReceipt(){
     '</div>' +
     '<div class="receipt-hero">' +
       '<div class="success-ring"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="M5 13l4 4L19 7"/></svg></div>' +
-      '<div class="receipt-title">' + t(r.status === 'PENDING' ? 'receipt.pending_title' : 'success.title') + '</div>' +
-      '<div class="receipt-sub">' + t(r.status === 'PENDING' ? 'receipt.pending_sub' : 'success.subtitle') + '</div>' +
+      '<div class="receipt-title">' + t('success.title') + '</div>' +
+      '<div class="receipt-sub">' + t('success.subtitle') + '</div>' +
     '</div>' +
     '<div class="glass-elevated receipt-panel">' +
       '<div class="receipt-benef">' +
@@ -3118,7 +3202,7 @@ function renderReceipt(){
         '<div class="receipt-meta-item"><div class="receipt-meta-icon">' + icon('cal', 16) + '</div><div><div class="receipt-meta-label">' + t('receipt.date') + '</div><div class="receipt-meta-value">' + escapeHtml(fmtDate(r.createdAt)) + '</div></div></div>' +
         '<div class="receipt-meta-item"><div class="receipt-meta-icon">' + icon('clock', 16) + '</div><div><div class="receipt-meta-label">' + t('receipt.hour') + '</div><div class="receipt-meta-value">' + escapeHtml(fmtTime(r.createdAt)) + '</div></div></div>' +
         '<div class="receipt-meta-item"><div class="receipt-meta-icon">' + icon('doc', 16) + '</div><div><div class="receipt-meta-label">' + t('receipt.id') + '</div><div class="receipt-meta-value copy" data-action="copy" data-copy="' + escapeHtml(r.transactionId || r.id) + '"><span class="ltr">' + escapeHtml(r.transactionId || r.id) + '</span>' + icon('copy', 12) + '</div></div></div>' +
-        '<div class="receipt-meta-item"><div class="receipt-meta-icon" style="background:var(--success-bg);color:var(--success)">' + icon('check', 16) + '</div><div><div class="receipt-meta-label">' + t('receipt.status') + '</div><div class="receipt-meta-value ' + (r.status === 'PENDING' ? '' : 'ok') + '"' + (r.status === 'PENDING' ? ' style="color:var(--warning,#f5a524)"' : '') + '>' + t(r.status === 'PENDING' ? 'receipt.pending_status' : 'receipt.ok') + '</div></div></div>' +
+        '<div class="receipt-meta-item"><div class="receipt-meta-icon" style="background:var(--success-bg);color:var(--success)">' + icon('check', 16) + '</div><div><div class="receipt-meta-label">' + t('receipt.status') + '</div><div class="receipt-meta-value ok">' + t('receipt.ok') + '</div></div></div>' +
         '<div class="receipt-meta-item" style="grid-column:1/-1"><div class="receipt-meta-icon">' + icon('clock', 16) + '</div><div><div class="receipt-meta-label">' + t('receipt.reference') + '</div><div class="receipt-meta-value ltr" id="receipt-ref">' + escapeHtml(r.reference || r.id) + '</div></div></div>' +
       '</div>' +
     '</div>' +
@@ -3284,6 +3368,15 @@ function renderSettings(){
     '</div>';
   html += '</div>';
 
+  html += settingsSection(t('settings.sectionSecurity'));
+  html += '<div class="settings-group">' +
+    settingsToggleRow({ icon:'shield', title:t('settings.biometric'), sub:t('settings.biometricDesc'), checked:bioOn, action:'settings-toggle-biometric' }) +
+    settingsToggleRow({ icon:'lock', title:t('settings.txConfirm'), sub:t('settings.txConfirmDesc'), checked:txConfirmOn, action:'settings-toggle-txconfirm' }) +
+    '<button class="settings-row" type="button" data-action="settings-create-pin"><div class="tile"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg></div><div class="settings-row-body"><div class="settings-row-title">'+t('pin.createTitle')+'</div><div class="settings-row-sub">'+(AppLock&&AppLock.hasPinSet()?'PIN actif — appuyez pour le modifier':'Activer le verrouillage PIN')+'</div></div><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="dir-flip"><polyline points="9 18 15 12 9 6"/></svg></button>' +
+    settingsLinkRow({ icon:'device', title:t('devices.title'), sub:t('devices.current'), nav:'devices' }) +
+    settingsLinkRow({ icon:'session', title:t('sessions.title'), sub:t('sessions.current'), nav:'sessions' }) +
+  '</div>';
+
   html += settingsSection(t('settings.sectionPreferences'));
   html += '<div class="settings-group">' +
     '<div class="settings-row" style="cursor:default"><div class="tile">' + icon('globe', 20) + '</div><div class="settings-row-body"><div class="settings-row-title">' + t('settings.language') + '</div><div class="settings-row-sub">' + t('settings.languages_list') + '</div></div></div>' +
@@ -3297,14 +3390,6 @@ function renderSettings(){
     settingsToggleRow({ icon:'bell', title:t('settings.notifs'), sub:t('settings.notifsDesc'), checked:notifsOn, action:'settings-toggle-notifs' }) +
     settingsToggleRow({ icon:'vibrate', title:t('settings.vibration'), sub:t('settings.vibrationDesc'), checked:vibOn, action:'settings-toggle-vibration' }) +
     settingsToggleRow({ icon:'device', title:t('settings.desktopMode'), sub:t('settings.desktopModeDesc'), checked:LayoutMode.isDesktop(), action:'layout-toggle' }) +
-  '</div>';
-
-  html += settingsSection(t('settings.sectionSecurity'));
-  html += '<div class="settings-group">' +
-    settingsToggleRow({ icon:'shield', title:t('settings.biometric'), sub:t('settings.biometricDesc'), checked:bioOn, action:'settings-toggle-biometric' }) +
-    settingsToggleRow({ icon:'lock', title:t('settings.txConfirm'), sub:t('settings.txConfirmDesc'), checked:txConfirmOn, action:'settings-toggle-txconfirm' }) +
-    settingsLinkRow({ icon:'device', title:t('devices.title'), sub:t('devices.current'), nav:'devices' }) +
-    settingsLinkRow({ icon:'session', title:t('sessions.title'), sub:t('sessions.current'), nav:'sessions' }) +
   '</div>';
 
   html += settingsSection(t('settings.sectionFinance'));
@@ -3933,11 +4018,15 @@ function wire(id){
       }
       else if (a === 'settings-toggle-notifs'){
         const next = !(Runtime.settings.notifications !== false);
+        if (next && 'Notification' in window && Notification.permission === 'default'){
+          try { await Notification.requestPermission(); } catch(e){}
+        }
         try {
           const uid = UserContext.requireCtx().uid;
           await UserDataEngine.writeDoc(uid, 'preferences', Object.assign({}, Runtime.settings, { notifications: next }));
           Runtime.settings.notifications = next;
-        } catch(err){}
+          toast(next ? '🔔 Notifications activées' : '🔕 Notifications désactivées', next ? 'success' : 'info');
+        } catch(err){ toast(t('errors.UNKNOWN_ERROR'),'error'); }
         R.go('settings', { force:true });
       }
       else if (a === 'settings-toggle-vibration'){
@@ -3970,6 +4059,9 @@ function wire(id){
           Runtime.security.transactionConfirmationRequired = next;
         } catch(err){}
         R.go('settings', { force:true });
+      }
+      else if (a === 'settings-create-pin'){
+        if (window.AppLock) AppLock.show('create');
       }
       else if (a === 'sign-out'){
         await AuthEngine.signOut();
@@ -4075,8 +4167,8 @@ function wire(id){
       else if (n === 'crypto-buy'){ CRYPTO_FLOW.fromMain = { asset:null, fiatAmount:0, cryptoAmount:0, rate:0, fee:0 }; R.go('crypto-buy'); }
       else if (n === 'crypto-sell'){ CRYPTO_FLOW.sell = { asset:null, amount:0 }; R.go('crypto-sell'); }
       else if (n === 'crypto-swap'){ CRYPTO_FLOW.swap = { fromAsset:null, toAsset:null, amount:0 }; R.go('crypto-swap'); }
-      else if (n === 'crypto-send'){ CRYPTO_FLOW.send = { asset:null, network:null, address:null, memo:null, amount:0 }; R.go('crypto-send'); }
-      else if (n === 'crypto-receive'){ CRYPTO_FLOW.receive = { asset:null, network:null }; R.go('crypto-receive'); }
+      else if (n === 'crypto-send'){ if (blockUnsupported()) return; CRYPTO_FLOW.send = { asset:null, network:null, address:null, memo:null, amount:0 }; R.go('crypto-send'); }
+      else if (n === 'crypto-receive'){ if (blockUnsupported()) return; CRYPTO_FLOW.receive = { asset:null, network:null }; R.go('crypto-receive'); }
       else if (n === 'crypto-to-bank'){ if (blockUnsupported()) return; R.go('crypto-to-bank'); }
       else if (n === 'crypto-spot'){ const aid = el.getAttribute('data-asset') || 'btc'; R.go('crypto-spot', { hash:'#/crypto/spot/' + aid }); }
       else if (n === 'banks') R.go('banks');
@@ -4586,7 +4678,7 @@ function wire(id){
     }
     let _pinBusy = false;
     async function cryptoConfirm(){
-      if (!CRYPTO_FLOW.pending || ['BUY','SELL','SWAP','SEND'].indexOf(CRYPTO_FLOW.pending.kind) === -1){ blockUnsupported(); return; }
+      if (!CRYPTO_FLOW.pending || ['BUY','SELL','SWAP'].indexOf(CRYPTO_FLOW.pending.kind) === -1){ blockUnsupported(); return; }
       if (_cryptoConfirmed || _pinBusy) return;
       _pinBusy = true;
       const _pin = await PinEngine.authorize();
@@ -4607,7 +4699,6 @@ function wire(id){
           let res;
           if (p.kind === 'BUY') res = await CryptoBuyEngine.buy({ symbol: sym, amountOMR: d.fiatAmount, idemKey: buyIdem , pinGrant: _pin.grant });
           else if (p.kind === 'SELL') res = await CryptoBuyEngine.sell({ symbol: sym, amount: d.amount, idemKey: buyIdem , pinGrant: _pin.grant });
-          else if (p.kind === 'SEND') res = await CryptoBuyEngine.sendExternal({ symbol: sym, network: d.networkId, address: d.toAddress, memo: d.memo, amount: d.amount, idemKey: buyIdem, pinGrant: _pin.grant });
           else res = await CryptoBuyEngine.swap({ from: sym, to: d.toAssetObj && d.toAssetObj.symbol, amount: d.amount, idemKey: buyIdem , pinGrant: _pin.grant });
           if (!res.ok){
             toast(t(res.error || 'errors.UNKNOWN_ERROR'), 'error');
@@ -4625,17 +4716,6 @@ function wire(id){
             receipt = { id: ID.receipt(), transactionId: txId, status:'SUCCESS', amount: got, currency:'OMR', asset: sym,
               fee: Number(row.fee != null ? row.fee : d.fee), total: Number(d.fiatAmount), costOMR: true,
               beneficiary: { name, networkName:'YOR WALLET' }, network:'YOR WALLET', reference: ref, createdAt: Date.now() };
-          } else if (p.kind === 'SEND'){
-            /* server result is authoritative: CONFIRMED = internal YOR transfer, PENDING = awaiting blockchain validation */
-            const internal = !!row.internal; const pending = row.status === 'PENDING';
-            const amt = Number(row.amount != null ? row.amount : d.amount);
-            const fee = Number(row.fee != null ? row.fee : 0);
-            shown = CurrencyEngine.formatCrypto(amt, sym);
-            const rcv = row.receiver || null;
-            receipt = { id: ID.receipt(), transactionId: txId, status: pending ? 'PENDING' : 'SUCCESS', amount: amt, currency: sym, asset: sym,
-              fee: fee, total: amt + fee, internal: internal,
-              beneficiary: { name: rcv ? rcv.name : AddressEngine.short(d.toAddress || ''), phone: rcv ? rcv.yor_id : null, networkName: d.network || '' },
-              network: d.network || '', address: d.toAddress, reference: ref, createdAt: Date.now() };
           } else if (p.kind === 'SELL'){
             const got = Number(row.fiat_received != null ? row.fiat_received : d.fiatReceived);
             shown = CurrencyEngine.format(got, 'OMR');
@@ -4654,7 +4734,7 @@ function wire(id){
           }
           try { await recordLocalReceipt(receipt); } catch(e){ console.error(e); }
           resetCryptoFlow();
-          InAppNotif.showCall({ title: t(p.kind === 'BUY' ? 'crypto.reviewBuy' : p.kind === 'SELL' ? 'crypto.reviewSell' : p.kind === 'SEND' ? 'crypto.reviewSend' : 'crypto.reviewSwap'), message: name, amount: shown, status: (receipt.status === 'PENDING' ? 'pending' : 'success') });
+          InAppNotif.showCall({ title: t(p.kind === 'BUY' ? 'crypto.reviewBuy' : p.kind === 'SELL' ? 'crypto.reviewSell' : 'crypto.reviewSwap'), message: name, amount: shown, status:'success' });
           R.go('receipt');
           return;
         } catch(e){ console.error(e); toast(t('errors.UNKNOWN_ERROR'), 'error'); R.go('crypto'); return; }
@@ -4688,9 +4768,7 @@ function wire(id){
     document.addEventListener('mouseup', end); document.addEventListener('touchend', end);
     R.onLeave(() => { document.removeEventListener('mousemove', move); document.removeEventListener('touchmove', move); document.removeEventListener('mouseup', end); document.removeEventListener('touchend', end); });
   }
-  if (id === 'crypto-receive'){ _wireRoot.querySelectorAll('[data-receive]').forEach(el => { el.onclick = async () => { const parts = el.getAttribute('data-receive').split('|'); CRYPTO_FLOW.receive.asset = parts[0]; CRYPTO_FLOW.receive.network = parts[1];
-      const a = CRYPTO_ASSETS.find(x => x.id === parts[0]); if (a) await CryptoBuyEngine.receiveAddress(a.symbol, parts[1]);
-      R.go('crypto-receive-address'); }; }); }
+  if (id === 'crypto-receive'){ _wireRoot.querySelectorAll('[data-receive]').forEach(el => { el.onclick = () => { const parts = el.getAttribute('data-receive').split('|'); CRYPTO_FLOW.receive.asset = parts[0]; CRYPTO_FLOW.receive.network = parts[1]; R.go('crypto-receive-address'); }; }); }
   if (id === 'banks'){
     _wireRoot.querySelectorAll('[data-bank-select]').forEach(el => { el.onclick = () => { R.go('banks-add'); setTimeout(() => { const sel = document.getElementById('bank-select'); if (sel){ sel.value = el.getAttribute('data-bank-select'); sel.dispatchEvent(new Event('change')); } }, 50); }; });
     _wireRoot.querySelectorAll('[data-bank-remove]').forEach(el => {
@@ -4889,7 +4967,6 @@ function wire(id){
     _wireRoot.querySelectorAll('[data-lang]').forEach(btn => {
       btn.onclick = async () => {
         LANG = btn.getAttribute('data-lang');
-        DeviceLang.set(LANG);
         try {
           const uid = UserContext.requireCtx().uid;
           await UserDataEngine.writeDoc(uid, 'preferences', Object.assign({}, Runtime.settings, { language: LANG }));
@@ -5335,7 +5412,6 @@ function showFatal(msg){
 function boot(){
   if (boot._done) return; boot._done = true;
   ViewportEngine.init();
-  LANG = DeviceLang.get(); applyI18n();   /* first paint already in the phone's language */
 
   /* Supabase must be configured before anything else. */
   if (!initSupabase()){
@@ -5377,25 +5453,24 @@ function boot(){
       setTimeout(() => {
         const sp = document.getElementById('splash');
         if (sp){ sp.classList.add('is-hidden'); setTimeout(() => { sp.style.display = 'none'; }, 600); }
-        LANG = (Runtime.settings && Runtime.settings.language) || DeviceLang.get();
+        LANG = (Runtime.settings && Runtime.settings.language) || CONFIG.APP.defaultLang;
         applyI18n();
         applyTheme((Runtime.settings && Runtime.settings.theme) || 'dark');
         renderSidebar();
         if (signedIn) R.go('home', { reset:true, force:true });
-        else if (!DeviceLang.hasChosen()) DeviceLang.showPicker(() => { renderSidebar(); R.go('login', { reset:true, force:true }); });
         else R.go('login', { reset:true, force:true });
       }, 1300);
       return;
     }
     if (signedIn){
-      LANG = (Runtime.settings && Runtime.settings.language) || DeviceLang.get();
+      LANG = (Runtime.settings && Runtime.settings.language) || CONFIG.APP.defaultLang;
       applyI18n();
       applyTheme((Runtime.settings && Runtime.settings.theme) || 'dark');
       renderSidebar();
       R.go('home', { reset:true, force:true });
     } else {
       resetRuntime();
-      LANG = DeviceLang.get();                 /* the previous user's language does not survive; the device language is used */
+      LANG = CONFIG.APP.defaultLang;                 /* nothing from the previous user survives on the login screen */
       applyI18n();
       applyTheme('dark');
       renderSidebar();
@@ -5420,6 +5495,119 @@ function boot(){
 }
 if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', boot);
 else boot();
+</script>
+<script>
+/* Card theme picker (visual preference only; card logic untouched) */
+(function(){var K='yor.cardTheme',T=[['midnight','#16254f'],['aurora','#0ea5a4'],['rose','#c77d8e'],['emerald','#0b7a5a'],['graphite','#3b414d'],['violet','#6b3df0']],cur='midnight';
+try{cur=localStorage.getItem(K)||cur}catch(e){}
+function apply(t){cur=t;document.documentElement.setAttribute('data-card-theme',t);try{localStorage.setItem(K,t)}catch(e){}[].forEach.call(document.querySelectorAll('.card-theme-dot'),function(b){b.classList.toggle('on',b.getAttribute('data-t')===t)});if(navigator.vibrate)try{navigator.vibrate(8)}catch(e){}}
+function inject(){var c=document.querySelector('.card-controls');if(!c||!c.parentNode||c.parentNode.querySelector('.card-themes'))return;var d=document.createElement('div');d.className='card-themes';T.forEach(function(x){var b=document.createElement('button');b.type='button';b.className='card-theme-dot'+(x[0]===cur?' on':'');b.setAttribute('data-t',x[0]);b.setAttribute('aria-label',x[0]);b.style.setProperty('--c',x[1]);b.addEventListener('click',function(e){e.stopPropagation();apply(x[0])});d.appendChild(b)});c.parentNode.insertBefore(d,c)}
+document.documentElement.setAttribute('data-card-theme',cur);
+new MutationObserver(inject).observe(document.documentElement,{childList:true,subtree:true});})();
+</script>
+<script>
+
+/* ===== APP-LOCK (6-digit PIN) ===== */
+(function(){
+  var _pin=''; var _maxTries=5; var _tries=0; var _locked=false; var _lockEl=null; var _active=false;
+
+  function _hasPinSet(){ try{ return !!localStorage.getItem('_yor_has_pin'); }catch(e){ return false; } }
+  function _setPinFlag(){ try{ localStorage.setItem('_yor_has_pin','1'); }catch(e){} }
+  function _storedHash(){ try{ return localStorage.getItem('_yor_pin_h')||''; }catch(e){ return ''; } }
+  function _storeHash(h){ try{ localStorage.setItem('_yor_pin_h',h); }catch(e){} }
+  async function _hash(v){ var buf=new TextEncoder().encode(v+':yor2025'); var ab=await crypto.subtle.digest('SHA-256',buf); return Array.from(new Uint8Array(ab)).map(b=>b.toString(16).padStart(2,'0')).join(''); }
+
+  function _labels(){ return ['','ABC','DEF','GHI','JKL','MNO','PQRS','TUV','WXYZ','']; }
+
+  function _buildLock(mode){
+    var dir=document.documentElement.getAttribute('dir')||'ltr';
+    var title=mode==='create'?(dir==='rtl'?'أنشئ رمز PIN':'Créer votre PIN'):(dir==='rtl'?'Déverrouiller':'Déverrouiller');
+    var sub=mode==='create'?(dir==='rtl'?'اختر رمز PIN من 6 أرقام':'Choisissez un code PIN à 6 chiffres'):(dir==='rtl'?'Entrez votre PIN pour continuer':'Entrez votre PIN pour continuer');
+    var btns=''; var L=_labels();
+    for(var n=1;n<=9;n++) btns+='<div class="yor-lock-key" data-k="'+n+'"><div class="yor-lock-key-n">'+n+'</div><div class="yor-lock-key-l">'+(L[n]||'')+'</div></div>';
+    btns+='<div class="yor-lock-key yor-lock-del" style="opacity:0" aria-hidden="true"></div>';
+    btns+='<div class="yor-lock-key" data-k="0"><div class="yor-lock-key-n">0</div></div>';
+    btns+='<div class="yor-lock-key yor-lock-del" data-k="del" aria-label="suppr">'+
+          '<svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="rgba(255,255,255,.7)" stroke-width="2" stroke-linecap="round"><path d="M21 4H8l-7 8 7 8h13a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2z"/><line x1="18" y1="9" x2="12" y2="15"/><line x1="12" y1="9" x2="18" y2="15"/></svg></div>';
+    var dots='';for(var i=0;i<6;i++) dots+='<div class="yor-lock-dot" id="yld'+i+'"></div>';
+    var bypass=mode==='create'?'':(window.AuthEngine?'<div class="yor-lock-bypass" id="yor-lock-bypass">'+
+                (dir==='rtl'?'تسجيل الخروج':'Se déconnecter')+'</div>':'');
+    return '<div class="yor-lock-logo">YOR</div>'+
+           '<div class="yor-lock-title">'+title+'</div>'+
+           '<div class="yor-lock-sub">'+sub+'</div>'+
+           '<div class="yor-lock-dots">'+dots+'</div>'+
+           '<div class="yor-lock-err" id="yor-lock-err"></div>'+
+           '<div class="yor-lock-pad">'+btns+'</div>'+bypass;
+  }
+
+  function _updateDots(n){ for(var i=0;i<6;i++){ var d=document.getElementById('yld'+i); if(d){ d.classList.toggle('filled',i<n); } } }
+  function _setErr(msg){ var e=document.getElementById('yor-lock-err'); if(e) e.textContent=msg||''; }
+  function _vibrate(p){ try{ if(navigator.vibrate) navigator.vibrate(p); }catch(e){} }
+
+  function _onKey(k){
+    if(_locked) return;
+    if(k==='del'){ if(_pin.length>0){ _pin=_pin.slice(0,-1); _updateDots(_pin.length); _setErr(''); } return; }
+    if(_pin.length>=6) return;
+    _pin+=k; _updateDots(_pin.length); _vibrate(6);
+    if(_pin.length===6){ _submit(_pin); _pin=''; }
+  }
+
+  async function _submit(val){
+    var h=await _hash(val);
+    if(window._lockMode==='create'){
+      if(!window._lockPin1){ window._lockPin1=h; _pin=''; _updateDots(0);
+        var dir=document.documentElement.getAttribute('dir')||'ltr';
+        _setErr(''); var s=document.querySelector('.yor-lock-sub');
+        if(s) s.textContent=dir==='rtl'?'أكّد رمز PIN':'Confirmez votre PIN'; return; }
+      if(window._lockPin1!==h){ _setErr('Les codes ne correspondent pas. Réessayez.'); window._lockPin1=null; _pin=''; _updateDots(0); _vibrate([60,40,60]); return; }
+      _storeHash(h); _setPinFlag(); window._lockPin1=null; _vibrate([10,30,10]); _hideLock(); return;
+    }
+    if(_storedHash()===h){ _tries=0; _vibrate([10,30,10]); _hideLock(); return; }
+    _tries++;_pin='';_updateDots(0);_vibrate([80,50,80]);
+    if(_tries>=_maxTries){ _locked=true; _setErr('Trop de tentatives. Déconnexion…'); setTimeout(function(){ _locked=false; _tries=0; if(window.AuthEngine) AuthEngine.signOut().catch(function(){}); window.location.reload(); },2500); return; }
+    _setErr('PIN incorrect. '+('' + (_maxTries-_tries))+' tentative(s) restante(s).');
+  }
+
+  function _showLock(mode){
+    if(!_lockEl){ _lockEl=document.createElement('div'); _lockEl.id='yor-lock'; document.body.appendChild(_lockEl); }
+    window._lockMode=mode||'enter'; window._lockPin1=null; _pin=''; _tries=0; _locked=false;
+    _lockEl.innerHTML=_buildLock(window._lockMode); _lockEl.classList.remove('yor-lock-hidden'); _active=true;
+    _lockEl.addEventListener('click',function(e){ var k=e.target.closest('[data-k]'); if(k) _onKey(k.getAttribute('data-k')); });
+    var bp=document.getElementById('yor-lock-bypass');
+    if(bp) bp.addEventListener('click',function(){ if(window.AuthEngine) AuthEngine.signOut().then(function(){ _hideLock(); }); else _hideLock(); });
+    document.addEventListener('keydown',_onPhysKey); _updateDots(0);
+  }
+  function _hideLock(){ if(_lockEl){ _lockEl.classList.add('yor-lock-hidden'); } _active=false; document.removeEventListener('keydown',_onPhysKey); }
+  function _onPhysKey(e){ if(!_active) return; if(/^\d$/.test(e.key)) _onKey(e.key); else if(e.key==='Backspace') _onKey('del'); }
+
+  /* Expose */
+  window.AppLock={
+    show:function(mode){ _showLock(mode); },
+    hide:_hideLock,
+    isActive:function(){ return _active; },
+    hasPinSet:_hasPinSet
+  };
+
+  /* Trigger on first load if PIN already set */
+  document.addEventListener('DOMContentLoaded',function(){
+    /* Small delay so the splash screen shows first */
+    setTimeout(function(){ if(_hasPinSet()) _showLock('enter'); },400);
+  });
+
+  /* Trigger on visibility change (backgrounding) */
+  var _bgTimer=null;
+  document.addEventListener('visibilitychange',function(){
+    if(document.hidden){
+      _bgTimer=setTimeout(function(){ if(_hasPinSet()&&!_active) _showLock('enter'); },800);
+    } else {
+      if(_bgTimer){ clearTimeout(_bgTimer); _bgTimer=null; }
+    }
+  });
+
+  /* iOS: pagehide */
+  window.addEventListener('pagehide',function(){ if(_hasPinSet()) _showLock('enter'); });
+})();
+
 </script>
 </body>
 </html>
